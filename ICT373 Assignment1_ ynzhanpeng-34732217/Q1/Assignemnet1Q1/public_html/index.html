@@ -1,0 +1,91 @@
+
+
+<!DOCTYPE html>
+<!-- Author: Yin Zhanpeng -->
+<!-- Date: 25th February 2024 -->
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>User Information Form</title>
+        <script>
+            function validateForm() {
+                var name = document.getElementById("name").value;
+                var phone = document.getElementById("phone").value;
+                var birthDate = document.getElementById("birthDate").value;
+                var pastime = document.getElementById("pastime").value;
+
+                // Simple validation
+                if (name === "" || phone === "" || birthDate === "" || pastime === "") {
+                    alert("Please fill in all fields.");
+                    return false;
+                }
+
+                // Additional validation for name (allow only alphabetic characters and spaces)
+                var nameRegex = /^[a-zA-Z\s]*$/;
+                if (!nameRegex.test(name)) {
+                    alert("Please enter a valid name (only alphabetic characters and spaces).");
+                    return false;
+                }
+
+                // Additional validation for phone number (must have exactly 8 digits)
+                var phoneRegex = /^\d{8}$/;
+                if (!phoneRegex.test(phone)) {
+                    alert("Please enter a valid 8-digit phone number.");
+                    return false;
+                }
+
+                // Additional validation for birth date
+                var dateParts = birthDate.split("-");
+                var year = parseInt(dateParts[0]);
+                var month = parseInt(dateParts[1]);
+                var day = parseInt(dateParts[2]);
+
+                // Check for leap year
+                var isLeapYear = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+                var daysInMonth = [31, (isLeapYear ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+                if (month < 1 || month > 12 || day < 1 || day > daysInMonth[month - 1]) {
+                    alert("Please enter a valid birth date.");
+                    return false;
+                }
+
+                // If all validation passed, submit the form
+                return true;
+            }
+        </script>
+    </head>
+    <body>
+
+        <h2>User Information Form</h2>
+
+        <form action="http://www.it.murdoch.edu.au/cgi-bin/reply1.pl" method="get" onsubmit="return validateForm()">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name"><br><br>
+
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone"><br><br>
+
+            <label for="birthDate">Birth Date:</label>
+            <input type="text" id="birthDate" name="birthDate" placeholder="YYYY-MM-DD"><br><br>
+
+            <label for="pastime">Favorite Pastime:</label>
+            <select id="pastime" name="pastime">
+                <option value="">Select One</option>
+                <option value="Surfing the Web">Surfing the Web</option>
+                <option value="Playing Sport">Playing Sport</option>
+                <option value="Listening to Music">Listening to Music</option>
+                <option value="Watching TV">Watching TV</option>
+                <option value="Playing Games">Playing Games</option>
+                <option value="Community Service">Community Service</option>
+                <option value="Daydreaming">Daydreaming</option>
+                <option value="Reading">Reading</option>
+                <option value="Meditation">Meditation</option>
+            </select><br><br>
+
+            <input type="submit" value="Submit">
+        </form>
+
+    </body>
+</html>
